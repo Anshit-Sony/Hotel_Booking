@@ -1,3 +1,4 @@
+<!-- Navbar -->
 <nav class="bg-gray-900 py-4 sticky top-0 w-full shadow-lg z-1000">
     <div class="container mx-auto flex justify-between items-center px-6 md:px-12">
         <!-- Logo -->
@@ -6,8 +7,9 @@
             <span class="text-2xl font-semibold ml-2 tracking-wide">WanderLust</span>
         </a>
 
-        <!-- Search Bar -->
-        <form action="/search" method="GET" class="hidden md:flex bg-white rounded-lg overflow-hidden w-96">
+        <!-- Search Bar (Visible on Desktop and Mobile) -->
+        <form id="desktop-search" action="/search" method="GET"
+            class="hidden md:flex bg-white rounded-lg overflow-hidden w-96 shadow-md">
             <input type="text" name="query" placeholder="Search listings..."
                 class="w-full px-4 py-2 text-gray-700 focus:outline-none" required>
             <button type="submit" class="px-4 bg-teal-500 text-white hover:bg-teal-600 transition">
@@ -22,19 +24,17 @@
 
         <!-- Navbar Links -->
         <div id="menu"
-            class="hidden md:flex md:items-center md:space-x-8 absolute md:relative top-16 md:top-0 left-0 w-full md:w-auto bg-gray-900 md:bg-transparent shadow-md md:shadow-none flex flex-col md:flex-row text-center md:text-left">
-            <a href="/"
-                class="block md:inline-block text-white text-lg py-2 md:py-0 hover:text-yellow-500 transition">Home</a>
-            <a href="/listings"
-                class="block md:inline-block text-white text-lg py-2 md:py-0 hover:text-yellow-500 transition">Explore</a>
+            class="hidden md:flex md:items-center md:space-x-8 absolute md:relative top-16 md:top-0 left-0 w-full md:w-auto bg-gray-900 md:bg-transparent shadow-md md:shadow-none flex-col md:flex-row text-center md:text-left z-50">
+            <a href="/" class="block md:inline-block text-white text-lg py-2 md:py-0 hover:text-yellow-500 transition">Home</a>
+            <a href="/listings" class="block md:inline-block text-white text-lg py-2 md:py-0 hover:text-yellow-500 transition">Explore</a>
             <% if(currUser){ %>
                 <a href="/listings/new"
                     class="block md:inline-block text-white text-lg py-2 md:py-0 hover:text-yellow-500 transition">Add
                     New Listing</a>
-                <% } %>
+            <% } %>
         </div>
 
-        <!-- User Auth Links -->
+        <!-- User Auth Links (Visible on Desktop) -->
         <div class="hidden md:flex items-center space-x-4">
             <% if(currUser) { %>
                 <div class="relative">
@@ -50,42 +50,29 @@
 
                     <!-- Slide-in Profile Menu -->
                     <div id="slideMenu"
-                        class="absolute right-0 md:right-0 md:left-auto mt-2 bg-white shadow-lg border border-gray-300 w-48 transform transition-transform duration-300 rounded-lg hidden">
+                        class="absolute right-0 mt-2 bg-white shadow-lg border border-gray-300 w-48 transform transition-transform duration-300 rounded-lg hidden">
                         <a href="/yourprofile" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">Your Account</a>
-                        <a href="/yourlistings" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">Your
-                            Listings</a>
-                        <a href="/yourbookings" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">Your
-                            Bookings</a>
-                        <a href="/listings/new" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">Add New
-                            Listing</a>
+                        <a href="/yourlistings" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">Your Listings</a>
+                        <a href="/yourbookings" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">Your Bookings</a>
+                        <a href="/listings/new" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">Add New Listing</a>
                         <a href="/logout" class="block px-4 py-2 text-red-600 hover:bg-red-100">Log Out</a>
                     </div>
                 </div>
-                <% } else { %>
-                    <a href="/login"
-                        class="px-6 py-2 bg-white text-blue-600 text-lg font-semibold rounded-lg border border-blue-600 hover:bg-blue-600 hover:text-white transition shadow-md">
-                        Log In
-                    </a>
-                    <a href="/signup"
-                        class="px-6 py-2 bg-blue-600 text-white text-lg font-semibold rounded-lg border border-blue-600 hover:bg-sky-700 transition shadow-md">
-                        Sign Up
-                    </a>
-                    <% } %>
+            <% } else { %>
+                <a href="/login"
+                    class="px-6 py-2 bg-white text-blue-600 text-lg font-semibold rounded-lg border border-blue-600 hover:bg-blue-600 hover:text-white transition shadow-md">
+                    Log In
+                </a>
+                <a href="/signup"
+                    class="px-6 py-2 bg-blue-600 text-white text-lg font-semibold rounded-lg border border-blue-600 hover:bg-sky-700 transition shadow-md">
+                    Sign Up
+                </a>
+            <% } %>
         </div>
     </div>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden md:hidden bg-gray-900 text-center py-4 space-y-3">
-        <a href="/" class="block text-white text-lg py-2 hover:text-yellow-500 transition">Home</a>
-        <a href="/listings" class="block text-white text-lg py-2 hover:text-yellow-500 transition">Explore</a>
-        <% if(currUser){ %>
-            <a href="/listings/new" class="block text-white text-lg py-2 hover:text-yellow-500 transition">Add New
-                Listing</a>
-            <% } %>
-    </div>
-
     <!-- Mobile Search Bar -->
-    <div class="md:hidden px-4 mt-4">
+    <div id="mobile-search" class="md:hidden px-4 mt-4">
         <form action="/search" method="GET" class="bg-white flex rounded-lg overflow-hidden">
             <input type="text" name="query" placeholder="Search listings..."
                 class="w-full px-4 py-2 text-gray-700 focus:outline-none" required>
@@ -95,22 +82,80 @@
         </form>
     </div>
 
+    <!-- Mobile Menu Items -->
+    <div id="mobile-menu" class="hidden bg-gray-900 text-center py-4 space-y-3">
+        <a href="/" class="block text-white text-lg py-2 hover:text-yellow-500 transition">Home</a>
+        <a href="/listings" class="block text-white text-lg py-2 hover:text-yellow-500 transition">Explore</a>
+        <% if(currUser){ %>
+            <a href="/listings/new" class="block text-white text-lg py-2 hover:text-yellow-500 transition">Add New Listing</a>
+        <% } %>
+    </div>
+
     <!-- Mobile Auth Links -->
-    <div id="mobile-auth-links" class="hidden md:hidden bg-gray-900 text-center py-4">
+    <div id="mobile-auth-links" class="hidden bg-gray-900 text-center py-4 space-y-3">
         <% if(currUser) { %>
-            <a href="/yourprofile" class="block text-white text-lg py-2 hover:text-yellow-500 transition">Your
-                Account</a>
-            <a href="/yourlistings" class="block text-white text-lg py-2 hover:text-yellow-500 transition">Your
-                Listings</a>
-            <a href="/yourbookings" class="block text-white text-lg py-2 hover:text-yellow-500 transition">Your
-                Bookings</a>
+            <a href="/yourprofile" class="block text-white text-lg py-2 hover:text-yellow-500 transition">Your Account</a>
+            <a href="/yourlistings" class="block text-white text-lg py-2 hover:text-yellow-500 transition">Your Listings</a>
+            <a href="/yourbookings" class="block text-white text-lg py-2 hover:text-yellow-500 transition">Your Bookings</a>
             <a href="/logout" class="block text-red-500 text-lg py-2 hover:text-red-400 transition">Log Out</a>
-            <% } else { %>
-                <a href="/login" class="block text-white text-lg py-2 hover:text-yellow-500 transition">Log In</a>
-                <a href="/signup" class="block text-white text-lg py-2 hover:text-yellow-500 transition">Sign Up</a>
-                <% } %>
+        <% } else { %>
+            <a href="/login" class="block text-white text-lg py-2 hover:text-yellow-500 transition">Log In</a>
+            <a href="/signup" class="block text-white text-lg py-2 hover:text-yellow-500 transition">Sign Up</a>
+        <% } %>
     </div>
 </nav>
+
+<!-- Custom Styles for Responsive Design -->
+<style>
+    @media (max-width: 768px) {
+        #menu {
+            flex-direction: column;
+            align-items: center;
+            position: absolute;
+            top: 4rem;
+            left: 0;
+            width: 100%;
+            background-color: #1a202c;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #menu a {
+            padding: 12px 16px;
+            width: 100%;
+        }
+
+        #mobile-auth-links {
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            background-color: #1a202c;
+            padding-top: 1rem;
+        }
+
+        #mobile-menu {
+            background-color: #1a202c;
+            padding-top: 1rem;
+        }
+
+        #slideMenu {
+            right: 0;
+            left: auto;
+            width: 100%;
+        }
+    }
+
+    @media (min-width: 768px) {
+        #menu {
+            display: flex;
+        }
+
+        #mobile-menu,
+        #mobile-auth-links,
+        #mobile-search {
+            display: none;
+        }
+    }
+</style>
 
 <!-- JavaScript for Navbar Functionality -->
 <script>
@@ -118,14 +163,17 @@
     const menu = document.getElementById("menu");
     const mobileMenu = document.getElementById("mobile-menu");
     const mobileAuthLinks = document.getElementById("mobile-auth-links");
+    const mobileSearch = document.getElementById("mobile-search");
 
+    // Toggle Menu and Auth Links
     menuToggle.addEventListener("click", () => {
         menu.classList.toggle("hidden");
         mobileMenu.classList.toggle("hidden");
         mobileAuthLinks.classList.toggle("hidden");
+        mobileSearch.classList.toggle("hidden"); // Hide search bar when menu is open
     });
 
-    // Profile menu toggle
+    // Profile Menu Toggle
     const userIcon = document.getElementById("userIcon");
     const slideMenu = document.getElementById("slideMenu");
 

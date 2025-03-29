@@ -1,0 +1,33 @@
+<% layout('layouts/boilerplate') -%>
+<body>
+    <div class="max-w-4xl mx-auto mt-10">
+        <h2 class="text-3xl font-semibold text-center mb-6">My Bookings</h2>
+    
+        <% if (!bookings || bookings.length === 0) { %>
+            <p class="text-center text-gray-500">No bookings found. Start booking your next trip!</p>
+        <% } else { %>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <% bookings.forEach(booking => { %>
+                    <div class="border rounded-lg shadow-lg overflow-hidden">
+                        <img src="<%= booking.listing.image.url %>" alt="<%= booking.listing.title %>" class="w-full h-40 object-cover">
+                        
+                        <div class="p-4">
+                            <h3 class="text-xl font-semibold"><%= booking.listing.title %></h3>
+                            <p class="text-gray-500"><%= booking.listing.location %>, <%= booking.listing.country %></p>
+                            <p class="mt-2"><strong>Check-in:</strong> <%= booking.checkIn.toDateString() %></p>
+                            <p><strong>Check-out:</strong> <%= booking.checkOut.toDateString() %></p>
+                            <div class="flex justify-between">
+                                <a href="/listings/<%= booking.listing._id %>" class="inline-block mt-3 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">View Listing</a>
+                                <form action="/bookings/<%= booking._id %>?_method=DELETE" method="POST" onsubmit="return confirm('Are you sure?');">
+                                    <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition">
+                                        Delete Booking
+                                    </button>
+                                </form>                                
+                            </div>                         
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } %>
+    </div>
+</body>

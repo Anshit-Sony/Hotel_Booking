@@ -1,0 +1,68 @@
+<% layout('layouts/boilerplate') -%>
+
+    <body class="bg-gray-100 min-h-screen flex flex-col">
+        <main class="flex-1 p-6">
+            <!-- Form Container -->
+            <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8">
+                <h2 class="text-3xl font-semibold text-center text-gray-800 mb-8">Add New Listing</h2>
+
+                <!-- Form Start -->
+                <form method="POST" action="/listings" id="addListingForm" enctype="multipart/form-data">
+                    <!-- Title Field -->
+                    <div class="mb-6">
+                        <label for="title" class="block text-gray-700 font-medium mb-2">Title</label>
+                        <input id="title" type="text" name="listing[title]" placeholder="Enter the title"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required>
+                    </div>
+
+                    <!-- Description Field -->
+                    <div class="mb-6">
+                        <label for="description" class="block text-gray-700 font-medium mb-2">Description</label>
+                        <textarea id="description" name="listing[description]" rows="6"
+                            placeholder="Enter the description"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required></textarea>
+                    </div>
+
+                    <!-- Price Field -->
+                    <div class="mb-6">
+                        <label for="price" class="block text-gray-700 font-medium mb-2">Price</label>
+                        <input type="number" id="price" name="listing[price]" placeholder="Enter the price"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+
+                    <!-- Location Field -->
+                    <div class="mb-6">
+                        <label for="location" class="block text-gray-700 font-medium mb-2">Location</label>
+                        <input id="location" type="text" name="listing[location]" placeholder="Enter the location"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required>
+                    </div>
+
+                    <!-- Country Field -->
+                    <div class="mb-6">
+                        <label for="country" class="block text-gray-700 font-medium mb-2">Country</label>
+                        <input id="country" type="text" name="listing[country]" placeholder="Enter the country"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required>
+                    </div>
+
+                    <!-- Image Field -->
+                    <div class="mb-6">
+                        <label for="image" class="block text-gray-700 font-medium mb-2">Upload the Image</label>
+                        <input id="image" type="file" name="listing[image]"
+                            class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="flex justify-center">
+                        <button type="submit"
+                            class="bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition duration-300">
+                            Add Listing
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </body>

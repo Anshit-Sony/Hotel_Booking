@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WanderLust</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="/css/output.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="/css/star.css">
+
+    <!-- leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
+    </head>
+<body>
+    <body class="flex flex-col min-h-screen">
+        <%- include('../includes/navbar') %>
+        <%- include('../includes/flash') %>
+        
+        <!-- This container takes up all available space and pushes footer down -->
+        <div class="container flex-grow"><%- body %></div>
+    
+        <%- include('../includes/footer') %>
+        
+        <script src="/js/script.js"></script>
+    </body>  
+</body>
+</html>

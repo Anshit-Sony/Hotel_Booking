@@ -1,0 +1,12 @@
+<%if(success && success.length){%>
+    <div id="flash-message" class="alert alert-success flex items-center justify-between bg-green-500 text-white p-4 rounded-lg max-w-md mx-auto relative">
+        <span><%= success %></span>
+        <button onclick="closeFlashMessage()" class="text-white bg-transparent border-0 font-bold text-lg cursor-pointer hover:bg-green-700 rounded-full px-2">X</button>
+    </div>    
+<%}%>
+<%if(error && error.length){%>
+    <div id="flash-message" class="alert alert-success flex items-center justify-between bg-red-500 text-white p-4 rounded-lg max-w-md mx-auto relative">
+        <span><%= error %></span>
+        <button onclick="closeFlashMessage()" class="text-white bg-transparent border-0 font-bold text-lg cursor-pointer hover:bg-red-700 rounded-full px-2">X</button>
+    </div>    
+<%}%>

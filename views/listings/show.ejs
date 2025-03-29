@@ -1,0 +1,181 @@
+<% layout('layouts/boilerplate') -%>
+<body class="bg-gray-100 min-h-screen flex flex-col">
+    <!-- Main Content -->
+    <main class="flex-1 p-6">
+        <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8">
+            <!-- Listing Image -->
+            <div class="mb-6">
+                <img src="<%= listing.image.url %>" alt="<%= listing.title %>"
+                    class="w-full h-64 object-cover rounded-lg mb-6">
+            </div>
+            <p><i>Owned by: <%= listing.owner.username %></i></p>
+            <!-- Listing Title -->
+            <h2 class="text-4xl font-semibold text-gray-800 mb-6 text-center">
+                <%= listing.title %>
+            </h2>
+            <!-- Listing Details -->
+            <ul class="space-y-4 text-lg text-gray-700">
+                <li>
+                    <span class="font-medium text-gray-800">Description: </span>
+                    <%= listing.description %>
+                </li>
+                <li>
+                    <span class="font-medium text-gray-800">Price: </span>&dollar;<%=
+                        listing.price.toLocaleString('en-IN') %>
+                </li>
+                <li>
+                    <span class="font-medium text-gray-800">Location: </span>
+                    <%= listing.location %>
+                </li>
+                <li>
+                    <span class="font-medium text-gray-800">Country: </span>
+                    <%= listing.country %>
+                </li>
+            </ul>
+            <!-- Action Buttons -->
+            <%if(currUser && currUser._id.equals(listing.owner._id)){%>
+                <div class="mt-8 flex justify-between">
+                    <!-- Edit Button -->
+                    <a href="/listings/<%= listing._id %>/edit"
+                        class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-300">
+                        Edit the post
+                    </a>
+                    <!-- Delete Button -->
+                    <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE">
+                        <button type="submit"
+                            class="bg-red-500 text-white px-6 py-2 rounded-md hover:bg-red-600 transition duration-300">
+                            Delete the post
+                        </button>
+                    </form>
+                </div>
+                <% } else { %>
+                    <div class="mt-8">
+                        <a href="/listings/<%= listing._id %>/book"
+                            class="bg-green-500 text-white px-6 py-2 rounded-md hover:bg-green-600 transition duration-300">
+                            Book
+                        </a>
+                    </div>
+                    <% } %>
+        </div>
+        <%if(currUser){%>
+            <div class="max-w-3xl mt-2 mx-auto bg-white shadow-lg rounded-lg p-8">
+                <h4 class="text-2xl font-semibold text-gray-800 mb-4">Leave a Review</h4>
+                <form action="/listings/<%= listing._id %>/reviews" method="post" class="space-y-6">
+                    <!-- Rating -->
+                    <div>
+                        <label for="rating" class="block text-lg font-medium text-gray-700 mb-2">Rating</label>
+                        <fieldset class="starability-slot">
+                            <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1"
+                                checked aria-label="No rating." />
+                            <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                            <label for="first-rate1" title="Terrible">1 star</label>
+                            <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                            <label for="first-rate2" title="Not good">2 stars</label>
+                            <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                            <label for="first-rate3" title="Average">3 stars</label>
+                            <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                            <label for="first-rate4" title="Very good">4 stars</label>
+                            <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                            <label for="first-rate5" title="Amazing">5 stars</label>
+                        </fieldset>
+                    </div>
+                    <!-- Comment -->
+                    <div>
+                        <label for="comment" class="block text-lg font-medium text-gray-700 mb-2">Comment</label>
+                        <textarea name="review[comment]" id="comment" cols="30" rows="6"
+                            class="w-full p-4 border border-gray-300 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="Write your comment here..." required></textarea>
+                    </div>
+                    <!-- Submit Button -->
+                    <button type="submit"
+                        class="bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-300">
+                        Submit Review
+                    </button>
+                </form>
+            </div>
+            <%}%>
+            <div class="max-w-3xl mt-6 mx-auto bg-white shadow-lg rounded-lg p-8">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6">All Reviews</h3>
+                <!-- Average Rating Section -->
+                <% let totalRating=0; let reviewCount=listing.reviews.length; listing.reviews.forEach(review=> {
+                    totalRating += review.rating;
+                    });
+                    let averageRating = reviewCount > 0 ? (totalRating / reviewCount).toFixed(1) : 0;
+                    %>
+                    <div class="bg-yellow-100 p-4 rounded-lg shadow-sm mb-6">
+                        <p class="text-lg text-yellow-700 font-semibold">
+                            <strong>Average Rating:</strong>
+                            <span class="text-yellow-500">
+                                <%= '★' .repeat(Math.round(averageRating)) %>
+                                    <%= '☆' .repeat(5 - Math.round(averageRating)) %>
+                            </span>
+                            (<%= averageRating %> / 5)
+                        </p>
+                    </div>
+                    <% for(let review of listing.reviews) { %>
+                        <div class="bg-gray-50 p-4 rounded-lg shadow-sm mb-6">
+                            <p><i>author: <%= review.author.username %></i></p>
+                            <p class="text-lg text-gray-700 mb-2"><strong>Comment:</strong>
+                                <%= review.comment %>
+                            </p>
+                            <p class="text-lg text-gray-700"><strong>Rating:</strong>
+                                <span class="text-yellow-500">
+                                    <%= '★' .repeat(review.rating) %>
+                                        <%= '☆' .repeat(5 - review.rating) %>
+                                </span>
+                            </p>
+                            <%if(currUser && review.author._id.equals(currUser._id)){%>
+                                <form method="post"
+                                    action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                                    <button
+                                        class="bg-red-500 text-white px-6 py-2 rounded-md hover:bg-red-600 transition duration-300">
+                                        Delete Review
+                                    </button>
+                                </form>
+                            <%}%>
+                        </div>
+                    <% } %>
+            </div>
+    </main>
+    <!-- map section -->
+    <div class="max-w-3xl mt-6 mx-auto bg-white shadow-lg rounded-lg p-8">
+        <h2 class="text-3xl font-semibold text-gray-800 mb-4">Location on Map</h2>
+
+        <div id="map" class="w-full md:w-[500px] h-64 md:h-[50vh] mx-auto mt-8 mb-8 rounded-lg shadow-xl relative border-2 border-gray-300">
+
+        </div>
+    </div>
+    
+    <script>
+        const key = "<%= process.env.MAP_KEY %>";
+        const map = L.map('map').setView([49.2125578, 16.62662018], 14); 
+  
+        L.tileLayer(`https://api.maptiler.com/maps/basic-v2/{z}/{x}/{y}.png?key=${key}`,{ //style URL
+          tileSize: 512,
+          zoomOffset: -1,
+          minZoom: 1,
+          attribution: "\u003ca href=\"https://www.maptiler.com/copyright/\" target=\"_blank\"\u003e\u0026copy; MapTiler\u003c/a\u003e \u003ca href=\"https://www.openstreetmap.org/copyright\" target=\"_blank\"\u003e\u0026copy; OpenStreetMap contributors\u003c/a\u003e",
+          crossOrigin: true
+        }).addTo(map);
+        
+        fetch(`https://nominatim.openstreetmap.org/search?format=json&q=<%= encodeURIComponent(listing.location) %>`)
+          .then(response => response.json())
+          .then(data => {
+            if (data && data.length > 0) {
+              const latitude = parseFloat(data[0].lat);
+              const longitude = parseFloat(data[0].lon);
+  
+              map.setView([latitude, longitude], 13);
+  
+              L.marker([latitude, longitude]).addTo(map)
+            } else {
+              alert('Location not found. Please try a different search.');
+            }
+          })
+          .catch(error => {
+            console.error('Error fetching geolocation:', error);
+            alert('There was an error fetching the location.');
+          });
+        
+      </script>
+</body>

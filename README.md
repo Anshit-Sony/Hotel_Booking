@@ -13,8 +13,9 @@ The project follows the **MVC (Model-View-Controller)** architecture to ensure m
 ## 🛠️ Tech Stack
 - **Backend:** Node.js, Express.js
 - **Frontend:** EJS (Embedded JavaScript)
-- **Database:** MongoDB
+- **Database:** MongoDB Atlas
 - **Authentication:** Passport.js (Local Strategy)
+- **File Uploads:** Cloudinary
 
 ---
 
@@ -23,11 +24,12 @@ The project follows the **MVC (Model-View-Controller)** architecture to ensure m
 - 🔒 **User Authentication:** Secure user login, registration, and password encryption using Passport.js.
 - 📅 **Booking Management:** Book hotels with real-time availability.
 - 🧑‍💻 **Admin Panel:** Add, update, or delete hotel listings.
-- 📬 **Email Notifications:** Booking confirmation via email.
+- 📧 **Email Notifications:** Booking confirmation via email.
+- 📸 **Image Uploads:** Upload and manage hotel images with Cloudinary.
 
 ---
 
-## 🛆 Installation
+## 📦 Installation
 
 ### 1. Clone the repository
 ```bash
@@ -43,8 +45,11 @@ npm install
 ### 3. Create a `.env` file and configure environment variables
 ```
 PORT=3000
-MONGO_URI=<your-mongodb-connection-string>
+MONGO_URI=<your-mongodb-atlas-connection-string>
 SESSION_SECRET=<your-secret-key>
+CLOUDINARY_CLOUD_NAME=<your-cloudinary-cloud-name>
+CLOUDINARY_API_KEY=<your-cloudinary-api-key>
+CLOUDINARY_API_SECRET=<your-cloudinary-api-secret>
 ```
 
 ### 4. Start the server
@@ -72,7 +77,17 @@ The application will run at `http://localhost:3000`
 
 ---
 
+## 🤝 Contributing
+Contributions are welcome! Follow these steps to contribute:
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature/new-feature`).
+3. Commit your changes (`git commit -m "Add new feature"`).
+4. Push to the branch (`git push origin feature/new-feature`).
+5. Open a pull request.
+
+---
+
 ## 🧑‍💻 Author
 - **Anshit Sony** - [GitHub](https://github.com/Anshit-Sony)
 
-
+---
